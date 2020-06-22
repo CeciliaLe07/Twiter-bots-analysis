@@ -2,14 +2,13 @@
 
 ### Summary
 
-Social bots can affect online communication among humans. Previous research [4] [6] [2] suggests that bots are present on political discussions and social movements. We are going to study the Twitter bots’ presence and its influence on the political discussions about the 2019 Canadian federal elections at British Columbia during the period of 4 months before the elections on October 21th of 2019.
+Social bots can affect online communication among humans. Previous research suggests that bots are present on political discussions and social movements. We are going to study the Twitter bots’ presence and its influence on the political discussions about the 2019 Canadian federal elections at British Columbia during the period of 4 months before the elections on October 21th of 2019.
 
 ###  Motivation
 
 The popularity of Twitter, that positions it within the top 20 most popular social networks worldwide as of April 2019 with 330 million monthly active users, has attracted many automated programs which are known as “Bots”. These programs have appeared to be a double-edged sword for this social network.
 
-Bots can autonomously carry out actions such as tweet or re-tweet, as well as follow, unfollow or
-directly message other Twitter accounts. Beneficial uses of bots include the transmission of useful information such as global news, the automatic generation of interesting or creative content, and the automatic response to Twitter users through direct messages. In contrast, malign bots spread spam or malicious content and distort the shared information.
+Bots can autonomously carry out actions such as tweet or re-tweet, as well as follow, unfollow or directly message other Twitter accounts. Beneficial uses of bots include the transmission of useful information such as global news, the automatic generation of interesting or creative content, and the automatic response to Twitter users through direct messages. In contrast, malign bots spread spam or malicious content and distort the shared information.
 
 As Twitter became an important tool for protests, political conversations, and people mobilizations, the damage to shared info through this social media increased significantly. On September 2017, Twitter’s executives informed the Intelligence Committee of the United States that they have found evidence that signaled Russia was behind some fake and automatized accounts that were active during the 2016 presidential election. Studies have found that about 20% of the activity on Twitter related to such elections came from bots’ suspicious accounts.
 
@@ -19,8 +18,7 @@ Previous qualitative research on the usage of political bots found that Twitter 
 
 ### Objectives
 
-We aim to analyze the presence and information that Twitter bots at British Columbia produce on
-the discourse of the 2019 Canada federal election, identify their type and their influence to compare the results with the previous qualitative research in order to know if there has been an evolution on the Twitter bots behaviour, this is if the distinguished four types of Canadian bots keeps being the same; and whether the limited influence of bots was a temporary phenomenon at the 2015 Canada federal election that has changed for 2019.
+We aim to analyze the presence and information that Twitter bots at British Columbia produce on the discourse of the 2019 Canada federal election, identify their type and their influence to compare the results with the previous qualitative research in order to know if there has been an evolution on the Twitter bots behaviour, this is if the distinguished four types of Canadian bots keeps being the same; and whether the limited influence of bots was a temporary phenomenon at the 2015 Canada federal election that has changed for 2019.
 
 ### Resources
 
