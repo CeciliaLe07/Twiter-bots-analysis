@@ -118,9 +118,9 @@ users_final_df %>%
   head(5)
 
 
-selected_users <- c("MichelleCasti","DianneM65725926","dominic_apold",#"ImmoralReport","CRMirror",
-                    "mclickster13","BriApp","jjgpden",#"peterdiane01","AJWite"
-                    "saskboy","M_A_Davies","GrannaBaker")#,"garbee7160","MaxontheCoast")
+selected_users <- c("MichelleCasti","DianneM65725926","dominic_apold",
+                    "mclickster13","BriApp","jjgpden",
+                    "saskboy","M_A_Davies","GrannaBaker")
 
 save_pdf(DIR,"probabilities_trend")
 users_final_df %>% filter(screen_name %in% selected_users) %>%

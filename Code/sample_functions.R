@@ -45,7 +45,7 @@ removeCharn <- function(x,n=2){
   return(toString(x))
 }
 
-## Function that creates the matriz of terms
+## Function that creates the matrix of terms
 Build_dtm <- function(docs, minW = 3, maxW = 30, tokenizer = "words", minB = 10, maxB = Inf){
   
   dtm <- TermDocumentMatrix(docs, 
