@@ -1,0 +1,176 @@
+---
+author: "Cecilia Leon"
+output:
+  html_document:
+    toc: yes
+title: "Query 1: Elections"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+params:
+  argstart: !r Sys.Date()
+  argend: !r Sys.Date() + 1
+---
+
+This file shows a sample of the code that was employed to collect data from Twitter
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(rtweet)
+library(mongolite)
+library(jsonlite)
+library(ggplot2)
+library(kableExtra)
+library(lubridate)
+```
+
+To run the first query (Elections) we are going to use the credentials that we have in the following twitter's account,the access tokens can be found [here](https://developer.twitter.com/en/apps/16341710).
+
+| Field | Value |
+|------|-----|
+| Username|  |
+| Password |  |
+| App |  |
+
+```{r tokens_rtweet , echo = FALSE}
+token <- create_token(
+  app = "Test full archive API",
+  consumer_key = 
+  consumer_secret = 
+  access_token = 
+  access_secret = )
+```
+
+The number of documents before running the query is:
+
+```{r connect_elections}
+m_elections <- mongo(collection = "Elections", 
+                     url = "")
+
+m_elections$count()
+```
+
+
+```{r config_search, results="hide"}
+#config
+from <- params$argstart 
+to <- params$argend
+limit <- 100000
+
+#summary
+sum_find <- m_elections$find(query = '{}',fields = '{"timestamp_CAD":1,"id":1}')
+day <- sum_find$timestamp_CAD
+complete_days <- table(day)[-c(1)]
+```
+
+We run the query *Elections* on **`r from`** with a limit of `r show_num(limit, 0)` requests per day. This appears to be `r ifelse( limit > max(complete_days) ,"APPROPIATE", "WRONG")` according to the historical behaviour that daily mentions have shown.
+
+```{r histiric_graph, echo = FALSE}
+aux_df <- data.frame(complete_days)
+
+if(dim(aux_df)[1]>1){
+  aux_df$day <- as.Date(as.character(aux_df$day))
+
+  ggplot(aux_df, aes(day,Freq,group = 1)) +
+  geom_line(color='steelblue') +
+  geom_point(size = 1, color='steelblue') +
+  xlab("") + 
+  ylab("Number of tweets") +
+  ggtitle("Daily tweets count about 43rd Canadian Elections")
+}
+```
+
+**Summary**
+
+```{r, echo = FALSE}
+s_table <- rbind(max(complete_days),
+                 min(complete_days),
+                 mean(complete_days),
+                 sd(complete_days)
+                 )
+
+rownames(s_table) <- c("  Maximum  ","  Minumim  ","  Mean  ","  Sd  ")
+
+kable(s_table, 
+      digits= 0,
+      align = "c",
+      row.names = TRUE)  %>%
+  kable_styling(full_width = TRUE)
+```
+
+
+```{r insertion_twitteR, include = FALSE, eval = FALSE}
+last_sinceID <- ifelse(length(sum_find)==0,0,max(sum_find$id))
+
+tweets_query1 <- searchTwitter('"canadian elections"+OR+"2019 canada federal election"+OR+"canadian general election"+OR+#CanadaElection2019+OR+#elxn43+OR+#canadaelection+OR+#electioncanada2019+OR+#Elections2019+OR+(("canadian elections"+OR+"2019 canada federal election"+OR+"canadian general election"+OR+#CanadaElection2019+OR+#canadaelection)+#cdnpoli)', 
+                     resultType="recent",
+                     geocode ='54.751594238071675,-126.00017214111986,700mi',
+                     n = limit,
+                     since = from,
+                     until = to,
+                     sinceID = last_sinceID)
+```
+
+So, we perform the following query:
+
+
+```{r tAPI_rtweet}
+tweets_query1 <- search_tweets(
+  q = '(canadian (election OR elections)) OR (canada (election OR elections)) OR #CanadaElection2019 OR #elxn43 OR #canadaelection OR #electioncanada2019 OR #Elections2019 OR ( (canadian (election OR elections)) OR (canada (election OR elections)) OR #CanadaElection2019 OR #elxn43 OR #canadaelection OR #electioncanada2019 OR #Elections2019 #cdnpoli)',
+  type = "recent",
+  n = limit, 
+  include_rts = TRUE,
+  geocode = '54.751594238071675,-126.00017214111986,700mi',
+  since = from,
+  until = to,
+  retryonratelimit = TRUE,
+  lang = "en"
+  )
+```
+
+The number of found tweets is **`r dim(tweets_query1)[1]`**. These documents are going to be inserted in the collection *Elections*.
+
+```{r insertion_rtweet, echo = FALSE}
+
+if(length(tweets_query1)==0){
+  print("No more tweets to record")    
+}else{
+  tweets_query1$timestamp <- substr(tweets_query1$created_at,1,10)
+  tweets_query1$created_at_CAD <- tweets_query1$created_at - 25200
+  tweets_query1$timestamp_CAD <- substr(tweets_query1$created_at_CAD,1,10)
+  tweets_query1$week <- paste0(substr(tweets_query1$timestamp_CAD,1,4),"-",isoweek(tweets_query1$timestamp_CAD))
+  tweets_query1$tg_elections <- 1
+}
+
+modifiedCount <- matchedCount <- upsertedCount <- c()
+
+for(i in 1:dim(tweets_query1)[1]){
+  aux_doc <- toJSON(tweets_query1[i,])
+  aux_update <- m_elections$update(paste0('{"status_id":"',tweets_query1$status_id[i],'"}'),
+                     paste0('{"$set":',substr(aux_doc,2,nchar(aux_doc)-1),'}'),
+                     upsert = TRUE)
+  modifiedCount[i] <- aux_update$modifiedCount
+  matchedCount[i] <- aux_update$matchedCount
+  upsertedCount[i] <- aux_update$upsertedCount
+}
+```
+
+```{r update_summary}
+print(paste0("modifiedCount: ",sum(modifiedCount)))
+print(paste0("matchedCount: ",sum(matchedCount)))
+print(paste0("upsertedCount: ",sum(upsertedCount)))
+```
+
+After the insertion of **`r show_num(sum(upsertedCount))`** documents that correspond to the generated tweets at **`r from`**, the collection has a new number of records, which is:
+
+```{r new_counts}
+m_elections$count()
+```
+
+Finally, we disconnect from the database.
+
+```{r disconnect}
+m_elections$disconnect()
+```
+
+
+
