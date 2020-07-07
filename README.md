@@ -18,7 +18,11 @@ Previous qualitative research on the usage of political bots found that Twitter 
 
 ### Objectives
 
-We aim to analyze the presence and information that Twitter bots at British Columbia produce on the discourse of the 2019 Canada federal election, identify their type and their influence to compare the results with the previous qualitative research in order to know if there has been an evolution on the Twitter bots behaviour, this is if the distinguished four types of Canadian bots keeps being the same; and whether the limited influence of bots was a temporary phenomenon at the 2015 Canada federal election that has changed for 2019.
+We aim to analyze the presence of Twitter bots and the information they disseminated at British Columbia during the 43rd Canadian general election through the following goals:
+
+- To describe the time evolution of tweets with political discourse in the months leading to the 2019 Canadian federal elections.
+- To study the presence of bots, classify, and characterize them according to their account characteristics.
+- To analyze the types of tweets that are issued by each type of bot according to their content, and investigate if bots can be classified under the classes: ‘Dampeners’, ‘Amplifiers’ and ‘Transparency’, which were proposed in the qualitative research of 2015 Canada federal elections.
 
 ### Resources
 
@@ -42,5 +46,8 @@ We aim to analyze the presence and information that Twitter bots at British Colu
 
 - Fenwick McKelvey and Elizabeth Dubois. Computational propaganda in canada: The use of political bots. *The Computational Propaganda Project Working Paper Series*, 2017.
 
-- Pablo Suárez-Serrato, Margaret E Roberts, Clayton Davis, and Filippo Menczer. On the influence
-of social bots in online protests. *International Conference on Social Informatics*, pages 269–278, 2016.
+- Pablo Suárez-Serrato, Margaret E Roberts, Clayton Davis, and Filippo Menczer. On the influence of social bots in online protests. *International Conference on Social Informatics*, pages 269–278, 2016.
+
+- Robert Tibshirani, Guenther Walther, and Trevor Hastie. Estimating the number of clusters in a data set via the gap statistic. *Journal of the Royal Statistical Society: Series B (Statistical Methodology)*, 63(2):411–423, 2001.
+
+- Daniela M Witten and Robert Tibshirani. A framework for feature selection in clustering. *Journal of the American Statistical Association*, 105(490):713–726, 2010.
